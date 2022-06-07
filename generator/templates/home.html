@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="container">
+      <div class="container-image">
+        <img
+          src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e5/NASA_logo.svg/1224px-NASA_logo.svg.png"
+        />
+        <h2 class="title">ETL Objetos próximos a la Tierra</h2>
+      </div>
+      <div class="container-form">
+        <form action="{% url 'pineline' %}">
+          <input type="date" id="start_date" name="start_date" />
+          <input type="date" id="end_date" name="end_date" />
+          <button type="submit">Ejecutar Pipeline</button>
+        </form>
+      </div>
+      <div>
+        <h3>{% if message %} {{message}} {% endif %}</h3>
+      </div>
+      <div class="container-data">
+        <ul>
+          {% for rows in objects %}
+          <li>
+            {{ rows.name }} - {{ rows.is_potentially_hazardous_asteroid }}
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+    <script type="text/javascript">
+      let today = formatDate(new Date());
+      let yesterday = formatDate(new Date(Date.now() - 86400000));
+      console.log(document.getElementById("start_date"));
+      //document.getElementById("start_date").defaultValue = yesterday;
+      //document.getElementById("end_date").defaultValue = today;
+
+      function formatDate(date) {
+        const yyyy = date.getFullYear();
+        let mm = date.getMonth() + 1; // Months start at 0!
+        let dd = date.getDate();
+
+        if (dd < 10) dd = "0" + dd;
+        if (mm < 10) mm = "0" + mm;
+
+        return yyyy + "-" + mm + "-" + dd;
+      }
+    </script>
+  </body>
+</html>
+
+<style type="text/css">
+  img {
+    width: 100px;
+    height: 90px;
+  }
+  .title {
+    color: #15418c;
+  }
+  .container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+  .container-image {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+  }
+  .container-form {
+    margin-top: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 5;
+  }
+  form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .container-data {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 5;
+  }
+  button {
+    margin-left: 4px;
+    height: 30px;
+    background-color: #15418c;
+    color: white;
+    border-radius: 5%;
+    border: none;
+  }
+  input {
+    margin-left: 4px;
+    height: 30px;
+  }
+</style>
